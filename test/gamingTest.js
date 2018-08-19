@@ -19,7 +19,7 @@ contract('Gaming', async (accounts) => {
     const postBalance = await web3.eth.getBalance(player1).toNumber()
     const playerStats = await gaming.players(player1)
     assert.equal(playerStats[1].toNumber(), 1, 'The player should have 1 loss')
-    assert.isAtMost(initialBalance, postBalance + 10, 'some message here')
+    assert.isAtLeast(initialBalance, postBalance + 10, 'Player account should have decreased by the amount of the wager')
   })
 
   it('Should record player wins', async() => {

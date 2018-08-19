@@ -24,6 +24,9 @@ contract Gaming {
         _;
     }
 
+    event PlayerWon(address player, uint amount, uint mysteryNumber, uint displayedNumber);
+    event PlayerLost(address player, uint amount, uint mysteryNumber, uint displayedNumber);
+
     event GameFunded(address funder, uint amount);
 
     function mysteryNumber() private view returns (uint) {
@@ -43,6 +46,9 @@ contract Gaming {
             if (number > display) {
                 return false;
             }
+            if (number < display) {
+                return true;
+            }
         }
     }
 
@@ -52,12 +58,17 @@ contract Gaming {
         require(msg.sender.balance > msg.value, "Insufficient funds");
         uint mysteryNumber_ = mysteryNumber();
         bool isWinner = determineWinner(mysteryNumber_, display, guess);
+        Player storage player = players[msg.sender];
         if (isWinner == true) {
             /* Player won */
+            player.wins += 1;
             msg.sender.transfer(msg.value * 2); 
+            emit PlayerWon(msg.sender, msg.value, mysteryNumber_, display);
             return (true, mysteryNumber_);
         } else if (isWinner == false) {
             /* Player lost */
+            player.losses += 1;
+            emit PlayerLost(msg.sender, msg.value, mysteryNumber_, display);
             return (false, mysteryNumber_);
         }
     }
