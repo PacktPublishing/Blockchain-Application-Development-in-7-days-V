@@ -20,13 +20,6 @@ export function setProvider(provider) {
           provider: provider
         }
       })())
-
-      dispatch((() => {
-        return {
-          type: constants.SET_ACCOUNT,
-          id: userAccount
-        }
-      })())
     })
   }
 }

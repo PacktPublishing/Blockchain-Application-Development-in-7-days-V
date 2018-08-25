@@ -2,7 +2,6 @@ import React, { Component }   from 'react'
 import PropTypes              from 'prop-types'
 import { connect }            from 'react-redux'
 import { bindActionCreators } from 'redux'
-import injectTapEventPlugin   from 'react-tap-event-plugin'
 import MuiThemeProvider       from 'material-ui/styles/MuiThemeProvider'
 import muiTheme               from './styles/theme/mui-theme'
 import { HashRouter,
@@ -22,8 +21,7 @@ import * as providerActionCreators from 'core/actions/actions-provider'
 
 /* application containers & components */
 import Header           from 'containers/Header'
-
-injectTapEventPlugin()
+import Game         from 'containers/Game'
 
 export class App extends Component {
   constructor(props) {
@@ -53,6 +51,7 @@ export class App extends Component {
               <div className="container">
                 <div id="main">
                   <Switch>
+                    <Route path="/home" component={Game} />
                     <Redirect from="/" to="/home" />
                   </Switch>
                 </div>
