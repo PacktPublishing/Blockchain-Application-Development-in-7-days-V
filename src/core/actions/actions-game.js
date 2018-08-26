@@ -19,16 +19,6 @@ function winOrLose(GamingContract, wager, playerNumber, guess, resolve, reject) 
     .then((result) => {
         console.log('Transaction result: ', result)
         resolve(result.logs[0])
-        // GamingContract.deployed().then((gameWatch) => {
-        //     gameWatch.RoundComplete().watch((error, response) => {
-        //         if (error) {
-        //             reject(error)
-        //         }
-        //         console.log('Watch response: ', web3.utils.fromWei(response.args.wager.toString(), 'ether'))
-        //         console.log('The rest: ', response)
-        //         resolve(response)
-        //     })
-        // })
     })
     .catch(error => {
         console.log(error)
