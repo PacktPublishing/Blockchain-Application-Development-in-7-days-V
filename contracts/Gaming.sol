@@ -52,6 +52,7 @@ contract Gaming {
         }
     }
 
+    event RoundComplete(uint wager, uint playerNumber, uint mysteryNumber, bool guess, string result);
     function winOrLose(uint display, bool guess) external payable returns (bool, uint) {
         /* Use true for a higher guess, false for a lower guess */
         require(online == true, "The game is not online");
@@ -62,13 +63,13 @@ contract Gaming {
         if (isWinner == true) {
             /* Player won */
             player.wins += 1;
-            msg.sender.transfer(msg.value * 2); 
-            emit PlayerWon(msg.sender, msg.value, mysteryNumber_, display);
+            msg.sender.transfer(msg.value * 2);
+            emit RoundComplete(msg.value, display, mysteryNumber_, guess, "won");
             return (true, mysteryNumber_);
         } else if (isWinner == false) {
             /* Player lost */
             player.losses += 1;
-            emit PlayerLost(msg.sender, msg.value, mysteryNumber_, display);
+            emit RoundComplete(msg.value, display, mysteryNumber_, guess, "lost");
             return (false, mysteryNumber_);
         }
     }

@@ -7,6 +7,7 @@ import { Card, CardHeader }             from 'material-ui/Card'
 import {List, ListItem}                 from 'material-ui/List'
 import {RadioButton, RadioButtonGroup}  from 'material-ui/RadioButton'
 import RaisedButton                     from 'material-ui/RaisedButton'
+import Snackbar                         from 'material-ui/Snackbar'
 import TextField                        from 'material-ui/TextField'
 
 import * as gameActionCreators          from 'core/actions/actions-game'
@@ -37,7 +38,9 @@ export class Game extends Component {
             playerNumber: '',
             highLow: 'lower',
             wager: '',
-            history: []
+            history: [],
+            snackbar: false,
+            message: '',
         }
     }
 
@@ -47,20 +50,29 @@ export class Game extends Component {
         })
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        console.log(prevProps)
-        if (prevProps.game.timestamp !== this.props.game.timestamp) {
-            console.log('State: ', this.state.history)
-            const newHistory = this.state.history
-            newHistory.push({
-                timestamp: this.props.game.timestamp,
-                wager: this.props.game.wager,
-                playerNumber: this.props.game.playerNumber,
-                guess: this.props.game.guess
-            })
-            this.setState({
-                history: newHistory
-            })
+    componentWillReceiveProps(nextProps) {
+        console.log('Here are some props, gnarly dude! ', nextProps)
+        if (nextProps.game.transactionHash !== this.props.game.transactionHash) {
+            console.log('Received ', nextProps.game.transactionHash)
+            if (nextProps.game.success === false) {
+                // Error
+                console.log(nextProps.game.error)
+            } else {
+                const newHistory = this.state.history
+                newHistory.push({
+                    transactionHash: nextProps.game.transactionHash,
+                    wager: nextProps.game.wager,
+                    playerNumber: nextProps.game.playerNumber,
+                    mysteryNumber: nextProps.game.mysteryNumber,
+                    guess: nextProps.game.guess,
+                    result: nextProps.game.result
+                })
+                this.setState({
+                    history: newHistory,
+                    snackbar: true,
+                    message: `${nextProps.game.result} ${nextProps.game.wager} ether`
+                })
+            }
         }
     }
 
@@ -111,19 +123,25 @@ export class Game extends Component {
                         style={elementStyle}
                     />
                 </Card>
-                <Card style={style}>
+                <Card>
                     <CardHeader
                         title="History"
                     />
                     <List>
                         {this.state.history.map((round) =>
-                            <ListItem key={round.timestamp}
-                                primaryText="Result"
-                                secondaryText={`Wager: ${round.wager}\tYour Number:${round.playerNumber}\tGuess:${round.guess}}`}
+                            <ListItem key={round.transactionHash}
+                                primaryText={`Result:\t${round.result}`}
+                                secondaryText={`You ${round.result} ${round.wager} by guessing ${round.playerNumber} would be ${round.guess} than ${round.mysteryNumber}!`}
                             />
                         )}
                     </List>
                 </Card>
+                <Snackbar
+                    open={this.state.snackbar}
+                    message={this.state.message}
+                    autoHideDuration={4000}
+                    onRequestClose={this.handleRequestClose}
+                />
             </div>
         )
     }
@@ -135,7 +153,7 @@ export class Game extends Component {
     }
 
     playGame = () => {
-        console.log(`Player is betting ${this.state.wager} that ${this.state.playerNumber} is ${this.state.highLow} than the mystery number!`)
+        console.log(`Player is betting ${this.state.wager} ether that ${this.state.playerNumber} is ${this.state.highLow} than the mystery number!`)
         const { actions } = this.props
         actions.game.playRound(
             this.state.wager,
@@ -149,6 +167,10 @@ export class Game extends Component {
 
     generatePlayerNumber() {
         return Math.floor(Math.random() * 10)
+    }
+
+    handleRequestClose = () => {
+        this.setState({snackbar: false})
     }
 }
 
