@@ -17,10 +17,24 @@ function winOrLose(GamingContract, wager, playerNumber, guess, resolve, reject) 
         )
     })
     .then((result) => {
-        console.log('Transaction result: ', result)
         resolve(result.logs[0])
     })
     .catch(error => {
+        console.log(error)
+        reject(error)
+    })
+}
+
+function players(GamingContract, address, resolve, reject) {
+    console.log('calling contract')
+    GamingContract.deployed().then((gameContract) => {
+        return gameContract.players(address)
+    })
+    .then((result) => {
+        console.log('contract complete')
+        resolve(result)
+    })
+    .catch((error) => {
         console.log(error)
         reject(error)
     })
@@ -49,7 +63,48 @@ function dispatchRoundFailed(error, dispatch) {
             error: error,
             success: false
         }
-    }))
+    })())
+}
+
+function dispatchStatsComplete(event, dispatch) {
+    console.log('dispatching score')
+    dispatch((() => {
+        return {
+            type: constants.STATS,
+            wins: event[0],
+            losses: event[1],
+            success: true
+        }
+    })())
+}
+
+function dispatchStatsFailed(error, dispatch) {
+    dispatch((() => {
+        return {
+            type: constants.STATS,
+            success: false
+        }
+    })())
+}
+
+export function getScore() {
+    console.log('getting score')
+    return (dispatch, getState) => {
+        const { web3Provider } = getState().provider
+        const GamingContract = contract(Gaming)
+        GamingContract.setProvider(web3Provider.currentProvider)
+        GamingContract.defaults({from: web3Provider.eth.defaultAccount})
+
+        return new Promise((resolve, reject) => {
+            players(GamingContract, web3Provider.eth.defaultAccount, resolve, reject)
+        })
+        .then(event => {
+            dispatchStatsComplete(event, dispatch)
+        })
+        .catch(error => {
+            dispatchStatsFailed(error, dispatch)
+        })
+    }
 }
 
 export function playRound(wager, playerNumber, guess) {
@@ -63,6 +118,7 @@ export function playRound(wager, playerNumber, guess) {
             winOrLose(GamingContract, wager, playerNumber, guess, resolve, reject)
         })
         .then(event => {
+            getScore()
             dispatchRoundComplete(event, dispatch)
         })
         .catch(error => {

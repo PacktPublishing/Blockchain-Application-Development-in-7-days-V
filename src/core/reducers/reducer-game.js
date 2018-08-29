@@ -9,6 +9,8 @@ const initialState = {
     guess: '',
     result: '',
     error: '',
+    wins: 0,
+    losses: 0,
     success: ''
 }
 
@@ -24,6 +26,14 @@ export function gameReducer(state = initialState, action) {
             guess: action.guess ? 'higher' : 'lower',
             result: action.result,
             error: action.error,
+            success: action.success
+        })
+
+    case constants.STATS:
+        console.log('reducer ', action)
+        return Object.assign({}, state, {
+            wins: action.wins,
+            losses: action.losses,
             success: action.success
         })
 

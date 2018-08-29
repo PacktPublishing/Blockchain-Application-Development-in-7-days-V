@@ -51,9 +51,7 @@ export class Game extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('Here are some props, gnarly dude! ', nextProps)
         if (nextProps.game.transactionHash !== this.props.game.transactionHash) {
-            console.log('Received ', nextProps.game.transactionHash)
             if (nextProps.game.success === false) {
                 // Error
                 console.log(nextProps.game.error)
@@ -72,6 +70,8 @@ export class Game extends Component {
                     snackbar: true,
                     message: `${nextProps.game.result} ${nextProps.game.wager} ether`
                 })
+                const { actions } = this.props
+                actions.game.getScore()
             }
         }
     }
@@ -89,6 +89,7 @@ export class Game extends Component {
                 <Card style={style}>
                     <CardHeader
                         title="Betting Window"
+                        subtitle={`Current record ${this.props.game.wins} - ${this.props.game.losses}`}
                     />
                     <RadioButtonGroup
                         name="highLow"
@@ -139,7 +140,6 @@ export class Game extends Component {
                 <Snackbar
                     open={this.state.snackbar}
                     message={this.state.message}
-                    autoHideDuration={4000}
                     onRequestClose={this.handleRequestClose}
                 />
             </div>
@@ -153,7 +153,6 @@ export class Game extends Component {
     }
 
     playGame = () => {
-        console.log(`Player is betting ${this.state.wager} ether that ${this.state.playerNumber} is ${this.state.highLow} than the mystery number!`)
         const { actions } = this.props
         actions.game.playRound(
             this.state.wager,
