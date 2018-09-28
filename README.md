@@ -2,17 +2,11 @@
 # Blockchain Application Development in 7 Days [Video]
 This is the code repository for [Blockchain Application Development in 7 Days [Video]](https://www.packtpub.com/application-development/blockchain-application-development-7-days-video?utm_source=github&utm_medium=repository&utm_campaign=9781789341942), published by [Packt](https://www.packtpub.com/?utm_source=github). It contains all the supporting project files necessary to work through the video course from start to finish.
 ## About the Video Course
-For those who are brand new to blockchain it is best to become familiarized with some basic terminology and use cases for blockchain technology. After the viewer has been instructed on basic blockchain terms and uses, we
-will then begin coding a mock blockchain using JavaScript. This exercise will show how exactly the blockchain works and how it is quite resistant to fraud and hacking.
+Blockchain is a revolutionary technology. Bitcoin is an example of it but far from the only one, just as email is one particular use of the Internet. Ethereum is a decentralized Blockchain platform that runs smart contracts.
 
-The viewer will then begin learning the Solidity coding language which is essential for developing various blockchain dApps. We will go over the basic data types and functions with Solidity as we start to showcase to the viewer how exactly these functions can be used. The viewer will see their code work in action through the Remix IDE and get introduced to the MetaMask virtual wallet.
+Our course will teach you to build an online gaming application using the Ethereum Blockchain. Each 30 minute section will introduce fundamental Blockchain programming concepts as they relate to creating an online game, followed by practical exercises that customers can implement as homework assignments. With this course, you will learn core Blockchain application development skills, creating smart contracts, interacting with the Ethereum network, building user interfaces, and deploying your application to the Internet.
 
-Our first task with the Solidity coding language will be to conduct token generation. The viewer will first get insight to the Web3 library before diving into the development for our token generation. Using the Remix IDE, we will be able to see our token be produced and then view various transactions which use our tokens.
-
-DApps or “decentralized applications” are basically apps that are built on the blockchain and use a specific cryptocurrency. Here, we will use our newly found Solidity skills to create our first smart contract. We will then use our JavaScript coding skills to create two scripts to compile and deploy our smart contract from scratch. We also will get our first experience using the Web3 library with Ganache to write tests for our smart contract along
-with the Mocha test suite as a part of test driven development. Finally we will compile and deploy our script live to the ethereum blockchain where we will interact with it live through the Remix IDE and using the MetaMask wallet, send transactions to various accounts.
-
-Now that our dApp has been deployed live on the blockchain we will now create a simple front-end which will allow for our users to see and interact with our smart contract. We will use our JavaScript, HTML and CSS skills to design a simple front-end and then test sending transactions using our MetaMask wallet.
+This course supplies seven self-contained lessons taught in a practical, hands-on way. By the end of the course, you will be amazed how much you have learned about Blockchain application development on the Ethereum network in just one week.
 
 <H2>What You Will Learn</H2>
 <DIV class=book-info-will-learn-text>
