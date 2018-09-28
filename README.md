@@ -1,5 +1,3 @@
-# Blockchain Application Development in 7 days
-Blockchain Application Development in 7 days [video], published by Packt
 
 # Blockchain Application Development in 7 Days [Video]
 This is the code repository for [Blockchain Application Development in 7 Days [Video]](https://www.packtpub.com/application-development/blockchain-application-development-7-days-video?utm_source=github&utm_medium=repository&utm_campaign=9781789341942), published by [Packt](https://www.packtpub.com/?utm_source=github). It contains all the supporting project files necessary to work through the video course from start to finish.
