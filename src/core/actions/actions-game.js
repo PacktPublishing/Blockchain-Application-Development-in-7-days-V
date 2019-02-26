@@ -56,14 +56,17 @@ function dispatchRoundComplete(event, dispatch) {
 }
 
 function dispatchRoundFailed(error, dispatch) {
-    dispatch((() => {
-        return {
-            type: constants.ROUND_RESULTS,
-            timestamp: Date.now(),
-            error: error,
-            success: false
-        }
-    })())
+    const regex = /Insufficient funds/g
+    if (error.message.match(regex)) {
+        dispatch((() => {
+            return {
+                type: constants.ROUND_RESULTS,
+                timestamp: Date.now(),
+                error: 'You won, but the bank is out of Ether!',
+                success: false
+            }
+        })())
+    }
 }
 
 function dispatchStatsComplete(event, dispatch) {
