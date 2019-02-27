@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity 0.5.0;
 
 contract Gaming {
     /* Our Online gaming contract */
@@ -70,7 +70,7 @@ contract Gaming {
         emit GameFunded(msg.sender, msg.value);
     }
 
-    function() public payable {
+    function() external payable {
     }
 
 }
