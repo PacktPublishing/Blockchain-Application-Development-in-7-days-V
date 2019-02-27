@@ -55,6 +55,10 @@ export class Game extends Component {
             if (nextProps.game.success === false) {
                 // Error
                 console.log(nextProps.game.error)
+                this.setState({
+                    snackbar: true,
+                    message: nextProps.game.error
+                })
             } else {
                 const newHistory = this.state.history
                 newHistory.push({
