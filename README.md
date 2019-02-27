@@ -104,13 +104,18 @@ In addition to Webpack and React, this box adds: React-Router, Redux and Materia
 
 ## Installation
 
-1. Install node.js (version 8.9.x)
+1. Install node.js (version 10.15.0)
 
 1. Install webpack globally
     ```
     npm install -g webpack
     npm install -g webpack-cli
     ```
+
+1. Install npm dependencies
+   ```
+   npm install
+   ```
 
 1. Install truffle and Ganache, both available from [Truffle](https://truffleframework.com/).
 
