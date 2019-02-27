@@ -18,11 +18,25 @@ export function gameReducer(state = initialState, action) {
     switch (action.type) {
 
     case constants.ROUND_RESULTS:
+        let wager
+        let playerNumber
+        let mysteryNumber
+        if (typeof(action.wager) !== 'undefined') {
+            wager = action.wager.toString()
+        } else {
+            wager = '0'
+        }
+        if (typeof(action.playerNumber) !== 'undefined') {
+            playerNumber = action.playerNumber.toNumber()
+        }
+        if (typeof(action.mysteryNumber) !== 'undefined') {
+            mysteryNumber = action.mysteryNumber.toNumber()
+        }
         return Object.assign({}, state, {
             transactionHash: action.transactionHash,
-            wager: web3.utils.fromWei(action.wager.toString(), 'ether'),
-            playerNumber: action.playerNumber.toNumber(),
-            mysteryNumber: action.mysteryNumber.toNumber(),
+            wager: web3.utils.fromWei(wager, 'ether'),
+            playerNumber: playerNumber,
+            mysteryNumber: mysteryNumber,
             guess: action.guess ? 'higher' : 'lower',
             result: action.result,
             error: action.error,

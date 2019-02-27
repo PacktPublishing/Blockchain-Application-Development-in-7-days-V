@@ -41,18 +41,17 @@ function players(GamingContract, address, resolve, reject) {
 }
 
 function dispatchRoundComplete(event, dispatch) {
-    dispatch((() => {
-        return {
-            type: constants.ROUND_RESULTS,
-            transactionHash: event.transactionHash,
-            wager: event.args.wager,
-            playerNumber: event.args.playerNumber,
-            mysteryNumber: event.args.mysteryNumber,
-            guess: event.args.guess,
-            result: event.args.result,
-            success: true
-        }
-    })())
+    const regex = /Insufficient funds/g
+    if (error.message.match(regex)) {
+        dispatch((() => {
+            return {
+                type: constants.ROUND_RESULTS,
+                timestamp: Date.now(),
+                error: 'You won, but the bank is out of Ether!',
+                success: false
+            }
+        })())
+    }
 }
 
 function dispatchRoundFailed(error, dispatch) {
